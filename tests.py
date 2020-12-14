@@ -128,19 +128,11 @@ class CupcakeViewsTestCase(TestCase):
 
         cupcake = Cupcake.query.get_or_404(cupcake_id)
         data = resp.json["cupcake"]
+        del data["id"]
         cupcake.flavor = data["flavor"]
         cupcake.size = data["size"]
         cupcake.rating = data["rating"]
         cupcake.image = data["image"]
 
         self.assertEqual(resp.status_code, 200)
-
-        # print('resp', resp.data)
-        # print(jsonify(cupcake=cupcake.serialize()))
-
         self.assertEqual(data, updated_cupcake)
-
-
-        # self.assertEqual(jsonify(resp.json), jsonify(cupcake.serialize()))
-        
-
