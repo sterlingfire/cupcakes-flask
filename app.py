@@ -51,19 +51,32 @@ def show_cupcake_details(cupcake_id):
     return jsonify(cupcake=cupcake.serialize())
 
 
-""" Do not review below here:
-    non-functioning code planning for future steps. """
-# @app.route("/api/cupcakes/<int:cupcake_id>", methods="PATCH")
-# def update_cupcake_details(cupcake_id):
-#     """ Updates cupcake details. """
-#     cupcake = Cupcake.query.get_or_404(cupcake_id)
-# update the details based on what was passed
-# return jsonify(cupcake=cupcake)
+@app.route("/api/cupcakes/<int:cupcake_id>", methods=["PATCH"])
+def update_cupcake_details(cupcake_id):
+    """ Updates cupcake details.
+        Return {cupcake: {id, flavor, size, rating, image}}. """
+    cupcake = Cupcake.query.get_or_404(cupcake_id)
+
+    print('cupcake', cupcake)
+    data = request.json
+
+    print('data', data)
+
+    cupcake.id = cupcake_id
+    cupcake.flavor = data["flavor"]
+    cupcake.size = data["size"]
+    cupcake.rating = data["rating"]
+    cupcake.image = data["image"]
+    db.session.commit()
+    
+    return jsonify(cupcake=cupcake.serialize())
 
 
-# @app.route("/api/cupcakes/<int:cupcake_id>", methods="DELETE")
-# def delete_cupcake(cupcake_id):
-#     """ DELETES cupcake. """
-#     cupcake = Cupcake.query.get_or_404(cupcake_id)
-    # db.session.remove(cupcake) ## verify syntax
-    # return jsonify(message="Deleted")
+@app.route("/api/cupcakes/<int:cupcake_id>", methods=["DELETE"])
+def delete_cupcake(cupcake_id):
+    """ DELETES cupcake.
+        Return {message: "Deleted"}. """
+    cupcake = Cupcake.query.get_or_404(cupcake_id)
+    db.session.delete(cupcake) 
+    return jsonify(message="Deleted")
+ 

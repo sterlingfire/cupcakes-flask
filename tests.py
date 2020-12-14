@@ -2,6 +2,9 @@ from unittest import TestCase
 
 from app import app
 from models import db, Cupcake
+from flask import jsonify
+
+
 
 # Use test database and don't clutter tests with SQL
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///cupcakes_test'
@@ -107,3 +110,37 @@ class CupcakeViewsTestCase(TestCase):
             })
 
             self.assertEqual(Cupcake.query.count(), 2)
+
+    def test_update_cupcake(self):
+
+        cupcake_id = self.cupcake.id
+
+        updated_cupcake = {
+            "flavor": "TestFlavor3",
+            "size": "TestSize3",
+            "rating": 5,
+            "image": "http://test.com/cupcake2.jpg",
+        }
+
+        with app.test_client() as client:
+            url = f"/api/cupcakes/{cupcake_id}"
+            resp = client.patch(url, json=updated_cupcake)
+
+        cupcake = Cupcake.query.get_or_404(cupcake_id)
+        data = resp.json["cupcake"]
+        cupcake.flavor = data["flavor"]
+        cupcake.size = data["size"]
+        cupcake.rating = data["rating"]
+        cupcake.image = data["image"]
+
+        self.assertEqual(resp.status_code, 200)
+
+        # print('resp', resp.data)
+        # print(jsonify(cupcake=cupcake.serialize()))
+
+        self.assertEqual(data, updated_cupcake)
+
+
+        # self.assertEqual(jsonify(resp.json), jsonify(cupcake.serialize()))
+        
+
