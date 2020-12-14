@@ -52,6 +52,7 @@ class CupcakeViewsTestCase(TestCase):
         db.session.rollback()
 
     def test_list_cupcakes(self):
+        """ Test listing all cupcakes. """
         with app.test_client() as client:
             resp = client.get("/api/cupcakes")
 
@@ -71,6 +72,7 @@ class CupcakeViewsTestCase(TestCase):
             })
 
     def test_get_cupcake(self):
+        """ Test retrieving a cupcake. """
         with app.test_client() as client:
             url = f"/api/cupcakes/{self.cupcake.id}"
             resp = client.get(url)
@@ -88,6 +90,7 @@ class CupcakeViewsTestCase(TestCase):
             })
 
     def test_create_cupcake(self):
+        """ Test creating a cupcake. """
         with app.test_client() as client:
             url = "/api/cupcakes"
             resp = client.post(url, json=CUPCAKE_DATA_2)
@@ -112,7 +115,7 @@ class CupcakeViewsTestCase(TestCase):
             self.assertEqual(Cupcake.query.count(), 2)
 
     def test_update_cupcake(self):
-
+        """ Test updating a cupcake.  """
         cupcake_id = self.cupcake.id
 
         updated_cupcake = {
@@ -136,3 +139,12 @@ class CupcakeViewsTestCase(TestCase):
 
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(data, updated_cupcake)
+
+    def test_delete_cupcake(self):
+        """ Test cupcake deletion.  """
+        with app.test_client() as client:
+            url = f"/api/cupcakes/{self.cupcake.id}"
+            resp = client.delete(url)
+
+        self.assertEqual(resp.status_code, 200)
+        self.assertIn("Deleted", resp.json['message'])
