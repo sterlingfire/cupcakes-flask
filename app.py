@@ -48,3 +48,21 @@ def show_cupcake_details(cupcake_id):
 
     cupcake = Cupcake.query.get_or_404(cupcake_id)
     return jsonify(cupcake=cupcake.serialize())
+
+
+""" Do not review below here:
+    non-functioning code planning for future steps. """
+# @app.route("/api/cupcakes/<int:cupcake_id>", methods="PATCH")
+# def update_cupcake_details(cupcake_id):
+#     """ Updates cupcake details. """
+#     cupcake = Cupcake.query.get_or_404(cupcake_id)
+# update the details based on what was passed
+# return jsonify(cupcake=cupcake)
+
+
+# @app.route("/api/cupcakes/<int:cupcake_id>", methods="DELETE")
+# def delete_cupcake(cupcake_id):
+#     """ DELETES cupcake. """
+#     cupcake = Cupcake.query.get_or_404(cupcake_id)
+    # db.session.remove(cupcake) ## verify syntax
+    # return jsonify(message="Deleted")
