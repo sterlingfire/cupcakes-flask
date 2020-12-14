@@ -21,7 +21,7 @@ db.create_all()
 @app.route("/api/cupcakes", methods=["GET"])
 def show_all_cupcakes():
     """ GET: Shows a list of cupcakes.
-        POST: adds a cupcake. """
+        returns {cupcakes: [{id, flavor, size, rating, image}, ...]}"""
 
     cupcakes = Cupcake.query.all()
     serialized = [c.serialize() for c in cupcakes]
@@ -29,8 +29,8 @@ def show_all_cupcakes():
 
 @app.route("/api/cupcakes", methods=["POST"])
 def create_new_cupcake():
-    """ GET: Shows a list of cupcakes.
-        POST: adds a cupcake. """
+    """ POST: adds a cupcake.
+    returns {cupcake: {id, flavor, size, rating, image}}"""
 
     new_cupcake = Cupcake(flavor = request.json['flavor'],
                           size = request.json['size'],
@@ -44,7 +44,8 @@ def create_new_cupcake():
 
 @app.route("/api/cupcakes/<int:cupcake_id>")
 def show_cupcake_details(cupcake_id):
-    """ Shows cupcake details. """
+    """ Shows cupcake details.
+    returns {cupcake: {id, flavor, size, rating, image}} """
 
     cupcake = Cupcake.query.get_or_404(cupcake_id)
     return jsonify(cupcake=cupcake.serialize())
