@@ -119,10 +119,11 @@ class CupcakeViewsTestCase(TestCase):
         cupcake_id = self.cupcake.id
 
         updated_cupcake = {
+            "id":cupcake_id,
             "flavor": "TestFlavor3",
             "size": "TestSize3",
             "rating": 5,
-            "image": "http://test.com/cupcake2.jpg",
+            "image": "http://test.com/cupcake3.jpg",
         }
 
         with app.test_client() as client:
@@ -131,7 +132,6 @@ class CupcakeViewsTestCase(TestCase):
 
         cupcake = Cupcake.query.get_or_404(cupcake_id)
         data = resp.json["cupcake"]
-        del data["id"]
         cupcake.flavor = data["flavor"]
         cupcake.size = data["size"]
         cupcake.rating = data["rating"]
@@ -147,4 +147,4 @@ class CupcakeViewsTestCase(TestCase):
             resp = client.delete(url)
 
         self.assertEqual(resp.status_code, 200)
-        self.assertIn("Deleted", resp.json['message'])
+        self.assertEqual({'message': 'Deleted'}, resp.json)

@@ -17,6 +17,8 @@ toolbar = DebugToolbarExtension(app)
 connect_db(app)
 db.create_all()
 
+# @app.route("/") #for next step
+
 
 @app.route("/api/cupcakes", methods=["GET"])
 def show_all_cupcakes():
@@ -62,21 +64,20 @@ def update_cupcake_details(cupcake_id):
 
     print('data', data)
 
-    cupcake.id = cupcake_id
+
     cupcake.flavor = data["flavor"]
     cupcake.size = data["size"]
     cupcake.rating = data["rating"]
     cupcake.image = data["image"]
     db.session.commit()
-    
+
     return jsonify(cupcake=cupcake.serialize())
 
 
 @app.route("/api/cupcakes/<int:cupcake_id>", methods=["DELETE"])
 def delete_cupcake(cupcake_id):
     """ DELETES cupcake.
-        Return {message: "Deleted"}. """
+        Return {message: 'Deleted'}. """
     cupcake = Cupcake.query.get_or_404(cupcake_id)
-    db.session.delete(cupcake) 
+    db.session.delete(cupcake)
     return jsonify(message="Deleted")
- 
