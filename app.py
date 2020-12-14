@@ -17,7 +17,10 @@ toolbar = DebugToolbarExtension(app)
 connect_db(app)
 db.create_all()
 
-# @app.route("/") #for next step
+@app.route("/")
+def show_index_page():
+    """ Shows index page. """
+    return render_template("index.html")
 
 
 @app.route("/api/cupcakes", methods=["GET"])

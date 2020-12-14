@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- The following line of code was copied from bootswatch https://www.bootstrapcdn.com/bootswatch/ to import bootswatch darkly theme for Bootstrap. -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/darkly/bootstrap.min.css">
+    <title>Cupcakes!</title>
+</head>
+
+<body>
+    <main class="d-flex justify-content-center ">
+
+        <div id="jumbotron" class="jumbotron">
+            <h1 id="title"> Cupcakes! </h1>
+            <ul id="cupcake-list">
+                <li>Content goes here</li>
+            </ul>
+        </div>
+        <div id="form_jumbotron" class="jumbotron">
+            <h2>Add a cupcake:</h2>
+
+            <form id="cupcake-form">
+                <div class="form-group">
+                    <label for="flavor">Flavor:</label>
+                    <input class="form-control" type="text" name="flavor" id="flavor">
+                </div>
+                <div class="form-group">
+                    <label for="size">Size:</label>
+                    <input class="form-control" type="text" name="size" id="size">
+                </div>
+                <div class="form-group">
+                    <label for="rating">Rating:</label>
+                    <input class="form-control" type="number" name="rating" id="rating">
+                </div>
+                <div class="form-group">
+                    <label for="image">Image:</label>
+                    <input class="form-control" type="url" name="image" id="image">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-success">Add Cupcake</button>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+
+</html>
