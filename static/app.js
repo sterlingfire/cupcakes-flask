@@ -2,7 +2,9 @@ const CUPCAKES_ENDPOINT = "/api/cupcakes";
 const $cupcakeList = $("#cupcake-list");
 const $cupcakeForm = $("#cupcake-form");
 
-/* GET request to display all the cupcakes */
+/* GET request to display all the cupcakes
+ * Calls generateMarkupAndAppend (which does DOM manipulation)
+ */
 async function fetchCupcakeList() {
   const response = await axios.get(CUPCAKES_ENDPOINT);
   let cupcakeList = response.data.cupcakes;
@@ -14,7 +16,8 @@ async function fetchCupcakeList() {
   }
 }
 
-/* Genereate markup for each cupcake and append it to index.html */
+/* Genereate markup for each cupcake and append it to index.html
+ */
 function generateMarkupAndAppend(cupcake) {
   let html = `<li class="list-group">
                 <div class="list-group-item">
@@ -31,19 +34,18 @@ function generateMarkupAndAppend(cupcake) {
  * POST /api/cupcakes
  * which adds a cupcake
  */
-
 async function handleFormData(evt){
   evt.preventDefault();
-  // GET FORM DATA
+  // Get form data
   let flavor = $("#flavor").val();
   let size = $("#size").val();
   let rating =$("#rating").val();
   let image = $("#image").val();
   let cupcakeFormData = {"flavor":flavor, "size":size, "rating":rating, "image":image};
-  console.log(cupcakeFormData);
+
   // Return the request reponse
   let cupcake = await axios.post(CUPCAKES_ENDPOINT, cupcakeFormData);
-  console.log(cupcake.data.cupcake);
+  // Add cupcake to page
   generateMarkupAndAppend(cupcake.data.cupcake);
 }
 
