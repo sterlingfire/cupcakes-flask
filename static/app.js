@@ -23,11 +23,12 @@ async function fetchCupcakeList() {
 /* Genereate markup for a cupcake
  */
 function generateMarkup(cupcake) {
-  let html = `<li class="list-group">
+  let html = `<li class="list-group" data-id="${cupcake.id}">
                 <div class="list-group-item">
                   <h5 class=mb-1">Flavor: ${cupcake.flavor}</h5>
                   <img class="img-thumbnail list-group-item lw-25" src="${cupcake.image}">
                   <p class="mb-1">Size: ${cupcake.size}, Rating: ${cupcake.rating}</p>
+                  <button class="btn btn-danger">Delete</button>
                 </div>
               </li>`;
   return html;
@@ -49,11 +50,21 @@ async function handleFormData(evt) {
   // Return the request reponse
   let cupcake = await axios.post(CUPCAKES_ENDPOINT, cupcakeFormData);
   // Add cupcake to page
-  generateMarkupAndAppend(cupcake.data.cupcake);
+  showCupcakesOnPage();
 
   document.querySelector("#cupcake-form").reset();
 }
 
-fetchCupcakeList();
+async function deleteCupcake(evt){
+  let $cupcake = $(evt.target).closest('li');
+  let cupcake_id = Number($cupcake.attr('data-id'));
+  console.log(cupcake_id);
+
+  await axios.delete(`api/cupcakes/${cupcake_id}`);
+  $cupcake.remove();
+}
+
+showCupcakesOnPage();
 
 $cupcakeForm.on("submit", handleFormData)
+$cupcakeList.on("click", "button", deleteCupcake)
