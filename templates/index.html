@@ -10,38 +10,42 @@
 </head>
 
 <body>
-    <main class="d-flex justify-content-center ">
 
-        <div id="jumbotron" class="jumbotron">
-            <h1 id="title"> Cupcakes! </h1>
-            <ul id="cupcake-list">
-            <!-- Cupcakes goes here -->
-            </ul>
+    <main class="">
+        <div class="row">
+            <div id="jumbotron" class="col jumbotron">
+                <h1 class="display-3" id="title"> Cupcakes! </h1>
+                <ul id="cupcake-list">
+                    <!-- Cupcakes goes here -->
+                </ul>
+            </div>
         </div>
-        <div id="form_jumbotron" class="jumbotron">
-            <h2>Add a cupcake:</h2>
+        <div class="row">
+            <div id="form_jumbotron" class="jumbotron">
+                <h2>Add a cupcake:</h2>
 
-            <form id="cupcake-form">
-                <div class="form-group">
-                    <label for="flavor">Flavor:</label>
-                    <input class="form-control" type="text" name="flavor" id="flavor">
-                </div>
-                <div class="form-group">
-                    <label for="size">Size:</label>
-                    <input class="form-control" type="text" name="size" id="size">
-                </div>
-                <div class="form-group">
-                    <label for="rating">Rating:</label>
-                    <input class="form-control" type="number" name="rating" id="rating">
-                </div>
-                <div class="form-group">
-                    <label for="image">Image:</label>
-                    <input class="form-control" type="url" name="image" id="image">
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-success">Add Cupcake</button>
-                </div>
-            </form>
+                <form method="POST" id="cupcake-form">
+                    <div class="form-group">
+                        <label for="flavor">Flavor:</label>
+                        <input class="form-control" type="text" name="flavor" id="flavor">
+                    </div>
+                    <div class="form-group">
+                        <label for="size">Size:</label>
+                        <input class="form-control" type="text" name="size" id="size">
+                    </div>
+                    <div class="form-group">
+                        <label for="rating">Rating:</label>
+                        <input class="form-control" type="number" name="rating" id="rating">
+                    </div>
+                    <div class="form-group">
+                        <label for="image">Image:</label>
+                        <input class="form-control" type="url" name="image" id="image">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-success">Add Cupcake</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </main>
 
