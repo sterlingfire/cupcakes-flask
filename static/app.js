@@ -55,6 +55,7 @@ async function handleFormData(evt) {
   document.querySelector("#cupcake-form").reset();
 }
 
+/* Handles delete button, removes cupcake from database */
 async function deleteCupcake(evt){
   let $cupcake = $(evt.target).closest('li');
   let cupcake_id = Number($cupcake.attr('data-id'));
