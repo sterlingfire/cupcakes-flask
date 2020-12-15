@@ -2,23 +2,27 @@ const CUPCAKES_ENDPOINT = "/api/cupcakes";
 const $cupcakeList = $("#cupcake-list");
 const $cupcakeForm = $("#cupcake-form");
 
+/**
+ * Calls fetchCupcakeList to get the cupcakes
+ * calls generatemarkup and appends it to the DOM
+ */
+async function showCupcakesOnPage() {
+  let cupcakeList = await fetchCupcakeList()
+  for (let cupcake of cupcakeList) {
+    let html = generateMarkup(cupcake);
+    $cupcakeList.append(html);
+  }
+}
 /* GET request to display all the cupcakes
- * Calls generateMarkupAndAppend (which does DOM manipulation)
  */
 async function fetchCupcakeList() {
   const response = await axios.get(CUPCAKES_ENDPOINT);
-  let cupcakeList = response.data.cupcakes;
-
-  console.log(response.data.cupcakes)
-
-  for (let cupcake of cupcakeList) {
-    generateMarkupAndAppend(cupcake);
-  }
+  return response.data.cupcakes;
 }
 
-/* Genereate markup for each cupcake and append it to index.html
+/* Genereate markup for a cupcake
  */
-function generateMarkupAndAppend(cupcake) {
+function generateMarkup(cupcake) {
   let html = `<li class="list-group">
                 <div class="list-group-item">
                   <h5 class=mb-1">Flavor: ${cupcake.flavor}</h5>
@@ -26,27 +30,28 @@ function generateMarkupAndAppend(cupcake) {
                   <p class="mb-1">Size: ${cupcake.size}, Rating: ${cupcake.rating}</p>
                 </div>
               </li>`;
-
-  $cupcakeList.append(html);
+  return html;
 }
 
 /* Grabs form data then sends AJAX request to
  * POST /api/cupcakes
  * which adds a cupcake
  */
-async function handleFormData(evt){
+async function handleFormData(evt) {
   evt.preventDefault();
   // Get form data
   let flavor = $("#flavor").val();
   let size = $("#size").val();
-  let rating =$("#rating").val();
+  let rating = $("#rating").val();
   let image = $("#image").val();
-  let cupcakeFormData = {"flavor":flavor, "size":size, "rating":rating, "image":image};
+  let cupcakeFormData = { flavor, size, rating, image };
 
   // Return the request reponse
   let cupcake = await axios.post(CUPCAKES_ENDPOINT, cupcakeFormData);
   // Add cupcake to page
   generateMarkupAndAppend(cupcake.data.cupcake);
+
+  document.querySelector("#cupcake-form").reset();
 }
 
 fetchCupcakeList();
